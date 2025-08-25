@@ -34,9 +34,10 @@ with st.expander('Preprocessing'):
     'Fat ': 'Fat'})
 
     st.write("✅ Renamed columns: **'Temprature' → 'Temperature'**")
-    st.write("✅ Renamed columns: **'Fat ' → 'Temperature'**")
-
-    st.write('**● Raw data**')
+    st.write("✅ Renamed columns: **'Fat ' → 'Fat'**")
+    st.write(f"Missing Value: {df.isnull().sum()}")
+    
+    st.write('**● Data**')
     df
 
     st.subheader("Feature Types")
