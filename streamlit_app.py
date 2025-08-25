@@ -180,11 +180,11 @@ with st.expander("Input Features"):
     st.write("**Combined Input With Dataframe**")
     combine_input_with_df
 
-
 # Data Preprocessing
 with st.expander("Data Preprocessing"):
     st.write('Test')
-    st.wrie('Test 2')
+    st.write('Test 2')
+    st.write("**Grade Statistics:**")
 
 
 
