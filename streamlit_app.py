@@ -63,7 +63,7 @@ with st.expander('Preprocessing'):
 with st.expander("Exploratory Data Analysis"):
     tab1, tab2, tab3, tab4 = st.tabs(["Target Distribution", "Feature Analysis", "Correlations", "Statistical Summary"])
     
-    with tab3:
+    with tab1:
         st.subheader("Milk Grade Distribution")
         fig, ax = plt.subplots(figsize=(8, 6))
         sns.countplot(data=df, x='Grade', palette='viridis')
@@ -75,7 +75,7 @@ with st.expander("Exploratory Data Analysis"):
         st.write("**Grade Statistics:**")
         st.write(grade_stats)
     
-    with tab4:
+    with tab2:
         st.subheader("Numeric Features Distribution")
         num_cols = ['pH', 'Temperature', 'Colour']
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
@@ -99,13 +99,13 @@ with st.expander("Exploratory Data Analysis"):
         plt.tight_layout()
         st.pyplot(fig)
     
-    with tab2:
+    with tab3:
         st.subheader("Feature Correlation Matrix")
         fig, ax = plt.subplots(figsize=(8, 6))
         sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
         plt.title("Correlation Matrix")
         st.pyplot(fig)
     
-    with tab1:
+    with tab4:
         st.subheader("Statistical Summary")
         st.write(df.describe())
