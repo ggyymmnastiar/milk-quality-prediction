@@ -153,7 +153,7 @@ for c in binary_cols:
 
 with st.expander("TEST"):
     for i in df.columns:
-        st.write(df[i].dtypes())
+        df[i].dtypes()
 
 
 # Input Features
