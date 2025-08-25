@@ -152,10 +152,10 @@ with st.sidebar:
 
     pH = st.slider('pH', 0.0, 14.0, 6.6)
     Temperature = st.slider('Temperature', 30.0, 90.0, 44.22)
-    Taste = st.selectbox('Taste', ('0 (Not Satisfied)', '(Satisfied)'))
-    Odor = st.selectbox('Odor', ('0 (Not Satisfied)', '(Satisfied)'))
-    Fat = st.selectbox('Fat', ('0 (Not Satisfied)', '(Satisfied)'))
-    Turbidity = st.selectbox('Turbidity', ('0 (Not Satisfied)', '(Satisfied)'))
+    Taste = st.selectbox('Taste', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Odor = st.selectbox('Odor', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Fat = st.selectbox('Fat', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Turbidity = st.selectbox('Turbidity', ('0 (Not Satisfied)', '1 (Satisfied)'))
     Colour = st.slider('Colour', 240.0, 255.0, 251.84)
 
     # Create a DataFrame for the input features
