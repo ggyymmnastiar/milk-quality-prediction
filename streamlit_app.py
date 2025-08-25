@@ -8,7 +8,7 @@ st.title('🥛 Milk Quality Prediction App')
 st.info('This is app builds a machine learning model to predict milk quality using Random Forest Classification')
 
 with st.expander('Data Overview'):
-st.write(f"**Total Samples:** {len(df)}")
+    st.write(f"**Total Samples:** {len(df)}")
     st.write(f"**Features:** {len(df.columns)}")
     st.write(f"**Target Classes:** {df['Grade'].nunique()}")
     
