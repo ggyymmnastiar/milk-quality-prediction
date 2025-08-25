@@ -17,5 +17,5 @@ with st.expander('Data Overview'):
   X_raw
 
   st.write('**y (Label)**')
-  y_raw = df['Grande']
+  y_raw = df['Grade']
   y_raw
