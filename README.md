@@ -1,7 +1,4 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# 🥛 Milk Quality Prediction App
 
 Description of the app ...
 
