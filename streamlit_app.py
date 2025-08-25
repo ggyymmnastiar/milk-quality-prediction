@@ -207,8 +207,9 @@ y = df['Grade']
 X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                             test_size=0.2, random_state=101)
 
+# Data Prepocessing
 with st.expander("Data Preprocessing"):            
-    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Evaluation"])
+    tab1, tab2 = st.tabs(["Pipeline Setup", "Train | Test"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
@@ -242,43 +243,6 @@ with st.expander("Data Preprocessing"):
         X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                            test_size=0.2, random_state=101)
         """, language='python')
-    
-    with tab3:
-        st.subheader("Model Performance")
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.metric("Accuracy", "100%")
-            st.metric("Macro F1", "0.99")
-            st.metric("Weighted F1", "1.00")
-        
-        with col2:
-            st.metric("High Precision", "0.98")
-            st.metric("Low Precision", "1.00")
-            st.metric("Medium Precision", "1.00")
-        
-        if st.button("Train & Evaluate"):
-            # fit
-            pipeline.fit(X_train, y_train)
-            # predict
-            y_pred = pipeline.predict(X_test)
-            # confusion matrix
-            cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
-
-            # report
-            st.subheader("Classification Report")
-            st.text(classification_report(y_test, y_pred, digits=4))
-
-            # plot CM
-            st.subheader("Confusion Matrix")
-            fig, ax = plt.subplots(figsize=(6,5), dpi=200)
-            disp = ConfusionMatrixDisplay(cm, display_labels=pipeline.named_steps['model'].classes_)
-            disp.plot(ax=ax, cmap='YlGnBu', colorbar=True, values_format='d')
-            ax.set_xlabel('Predicted label')
-            ax.set_ylabel('True label')
-            ax.grid(False)
-            ax.set_aspect('equal')
-            st.pyplot(fig)
 
 
 
