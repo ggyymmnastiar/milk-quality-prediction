@@ -143,5 +143,5 @@ with st.expander("Exploratory Data Analysis"):
 # Input Features
 with st.sidebar:
     st.header('Input Features')
-    
-    pH = st.slider()
+    # bill_depth_mm = st.slider('Bill depth (mm)', 13.1, 21.5, 17.2)
+    pH = st.slider('pH', 0, 14, 6.6)
