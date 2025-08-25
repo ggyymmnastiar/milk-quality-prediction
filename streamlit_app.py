@@ -200,11 +200,11 @@ pipeline = Pipeline([
     ('model', RandomForestClassifier(random_state=101))
 ])
 
-# Train Test Split
+# Define X and y
 X = df.drop('Grade', axis=1)
 y = df['Grade']
-X_train, X_test, y_train, y_test = train_test_split(X, y, 
-                                    test_size=0.2, random_state=101)
+
+
 
 with st.expander("Data Preprocessing"):            
     tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Evaluation"])
@@ -245,6 +245,9 @@ with st.expander("Data Preprocessing"):
         st.subheader("Train Data")
         if st.button("🔄 Train Model"):
             with st.spinner("Training in progress..."):
+                # Train Test Split
+                X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                            test_size=0.2, random_state=101)
                 pipeline.fit(X_train, y_train)
                 st.success("Model trained successfully!")
 
