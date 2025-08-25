@@ -232,6 +232,8 @@ with st.expander("Data Preprocessing"):
 
     with tab2:
         st.subheader("Train | Test Split")
+        X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                            test_size=0.2, random_state=101)
         st.write(f"**Train Size:** {len(X_train)} samples")
         st.write(f"**Test Size:** {len(X_test)} samples")
         st.write(f"**Random State:** 101")
