@@ -7,6 +7,15 @@ st.title('🥛 Milk Quality Prediction App')
 
 st.info('This is app builds a machine learning model to predict milk quality using Random Forest Classification')
 
-df = pd.read_csv('https://raw.githubusercontent.com/ggyymmnastiar/g-milkqualityprediction/refs/heads/master/milk_dataset.csv')
+with st.expander('Data Overview'):
+  st.write('**Raw data**')
+  df = pd.read_csv('https://raw.githubusercontent.com/ggyymmnastiar/g-milkqualityprediction/refs/heads/master/milk_dataset.csv')
+  df
 
-df
+  st.write('**X (Input)**')
+  X_raw = df.drop('Grade', axis=1)
+  X_raw
+
+  st.write('**y (Label)**')
+  y_raw = df['Grande']
+  y_raw
