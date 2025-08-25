@@ -33,14 +33,14 @@ with st.expander('Preprocessing'):
     'Temprature': 'Temperature',
     'Fat ': 'Fat'})
 
-    st.write("✅ Renamed columns: **'Temprature' → 'Temperature'**")
-    st.write("✅ Renamed columns: **'Fat ' → 'Fat'**")
+    st.write("● Renamed columns **'Temprature' → 'Temperature'**")
+    st.write("● Renamed columns **'Fat ' → 'Fat'**")
 
     missing_counts = df.isnull().sum()
     st.write("**● Missing Values per Column:**")
     st.write(missing_counts)
     
-    st.write('**● Data**')
+    st.write('**● Final Data**')
     df
 
     st.subheader("Feature Types")
