@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 st.title('🥛 Milk Quality Prediction App')
 
-st.info('This is app builds a machine learning model to predict milk quality using Random Forest Classification')
+st.info('This is app builds a machine learning model to predict milk quality using Random Forest Classification.')
 
 # Data Overview
 with st.expander('Data Overview'):
@@ -66,16 +66,37 @@ with st.expander("Exploratory Data Analysis"):
     
     with tab1:
         st.subheader("Milk Grade Distribution")
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.countplot(data=df, x='Grade', palette='viridis')
-        plt.title("Milk Grade Distribution")
+        
+        # Improved visualization with better styling
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+        
+        # Count plot with better colors
+        sns.countplot(data=df, x='Grade', palette='Set2', ax=ax1)
+        ax1.set_title("Milk Grade Distribution", fontsize=14, fontweight='bold')
+        ax1.set_xlabel("Grade", fontsize=12)
+        ax1.set_ylabel("Count", fontsize=12)
+        
+        # Pie chart for better proportion visualization
+        grade_counts = df['Grade'].value_counts()
+        ax2.pie(grade_counts.values, labels=grade_counts.index, autopct='%1.1f%%', 
+                colors=sns.color_palette('Set2'), startangle=90)
+        ax2.set_title("Grade Proportion", fontsize=14, fontweight='bold')
+        
+        plt.tight_layout()
         st.pyplot(fig)
         
-        # Grade statistics
-        grade_stats = df['Grade'].value_counts()
-        st.write("**Grade Statistics:**")
-        st.write(grade_stats)
-    
+        # Enhanced statistics display
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write("**Grade Statistics:**")
+            st.dataframe(grade_counts.reset_index().rename(columns={'index': 'Grade', 'Grade': 'Count'}))
+        
+        with col2:
+            st.write("**Grade Percentages:**")
+            percentages = (grade_counts / len(df) * 100).round(2)
+            for grade, pct in percentages.items():
+                st.write(f"Grade {grade}: {pct}%")
+        
     with tab2:
         st.subheader("Numeric Features Distribution")
         num_cols = ['pH', 'Temperature', 'Colour']
