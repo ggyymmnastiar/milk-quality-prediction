@@ -152,7 +152,8 @@ for c in binary_cols:
     df[c] = df[c].map(label_map)
 
 with st.expander("TEST"):
-    df
+    for i in df.columns:
+        st.write(df[i].dtypes())
 
 
 # Input Features
