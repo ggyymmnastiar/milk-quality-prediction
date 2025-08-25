@@ -207,7 +207,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
                                     test_size=0.2, random_state=101)
 
 with st.expander("Data Preprocessing"):            
-    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test Split", "Evaluation"])
+    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Evaluation"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
@@ -242,7 +242,11 @@ with st.expander("Data Preprocessing"):
                                            test_size=0.2, random_state=101)
         """, language='python')
         
-        
+        st.subheader("Train Data")
+        if st.button("🔄 Train Model"):
+            with st.spinner("Training in progress..."):
+                pipeline.fit(X_train, y_train)
+                st.success("Model trained successfully!")
 
 
 
