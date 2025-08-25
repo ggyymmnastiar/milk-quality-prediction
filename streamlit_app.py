@@ -14,7 +14,7 @@ with st.expander('Data Overview'):
     
     st.write(f"**● Target Classes:** {df['Grade'].unique()}")
 
-   col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
     with col1:
         st.dataframe(df.head())
     with col2:
