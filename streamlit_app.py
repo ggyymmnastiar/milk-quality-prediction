@@ -242,6 +242,20 @@ with st.expander("Data Preprocessing"):
         X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                            test_size=0.2, random_state=101)
         """, language='python')
+    
+    with tab3:
+        st.subheader("Model Performance")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.metric("Accuracy", "100%")
+            st.metric("Macro F1", "0.99")
+            st.metric("Weighted F1", "1.00")
+        
+        with col2:
+            st.metric("High Precision", "0.98")
+            st.metric("Low Precision", "1.00")
+            st.metric("Medium Precision", "1.00")
 
 
 
