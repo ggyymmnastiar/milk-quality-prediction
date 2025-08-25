@@ -11,7 +11,8 @@ with st.expander('Data Overview'):
     df = pd.read_csv('https://raw.githubusercontent.com/ggyymmnastiar/g-milkqualityprediction/refs/heads/master/milk_dataset.csv')
     
     st.write(f"**● Total Samples:** {len(df)}")
-    st.write(f"**● Features:** {len(df.columns)}")
+    df.info()
+    
     st.write(f"**● Target Classes:** {df['Grade'].unique()}")
     
     st.write('**Raw data**')
