@@ -35,7 +35,7 @@ with st.expander('Preprocessing'):
 
     st.write("✅ Renamed columns: **'Temprature' → 'Temperature'**")
     st.write("✅ Renamed columns: **'Fat ' → 'Fat'**")
-    st.write(f"Missing Value: {df.isnull().sum()}")
+    st.write(f"Missing Value: pd.Series({df.isnull().sum()})")
     
     st.write('**● Data**')
     df
