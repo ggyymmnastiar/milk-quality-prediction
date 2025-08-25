@@ -139,11 +139,6 @@ with st.expander("Data Visualization"):
         st.subheader("Statistical Summary")
         st.write(df.describe())
 
-# Function for Rename Binary option
-def labeled_selectbox(name: str):
-    option = st.selectbox(name, ['0 (Not Satisfied)', '1 (Satisfied)'])
-    return 0 if option.startswith('0') else 1
-
 # Change datatype for binary features
 binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
 label_map = {0: '0 (Not Satisfied)', 1: '(Satisfied)'}
@@ -151,11 +146,7 @@ label_map = {0: '0 (Not Satisfied)', 1: '(Satisfied)'}
 for c in binary_cols:
     df[c] = df[c].map(label_map)
 
-with st.expander("TEST"):
-    for i in df.columns:
-        df[i].dtypes()
-
-
+df['Taste'].dtype
 # Input Features
 with st.sidebar:
     st.header('Input Features')
