@@ -129,54 +129,12 @@ with st.expander("Exploratory Data Analysis"):
         st.pyplot(fig)
     
     # Feature Correlation Matrix
-with tab3:
-    st.subheader("Feature Correlation Analysis")
-    
-    # Calculate correlation matrix
-    corr_matrix = df.corr(numeric_only=True)
-    
-    # Create a more informative correlation visualization
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
-    
-    # Heatmap with better styling
-    sns.heatmap(corr_matrix, annot=True, cmap='RdBu_r', center=0, 
-                square=True, ax=ax1, fmt='.2f', cbar_kws={'shrink': 0.8})
-    ax1.set_title("Correlation Matrix", fontsize=14, fontweight='bold')
-    
-    # Top correlations
-    # Get upper triangle of correlation matrix
-    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
-    corr_upper = corr_matrix.mask(mask)
-    
-    # Find top correlations
-    top_corr = []
-    for i in range(len(corr_matrix.columns)):
-        for j in range(i+1, len(corr_matrix.columns)):
-            if not pd.isna(corr_upper.iloc[i, j]):
-                top_corr.append((corr_matrix.columns[i], corr_matrix.columns[j], 
-                               corr_upper.iloc[i, j]))
-    
-    top_corr.sort(key=lambda x: abs(x[2]), reverse=True)
-    
-    # Plot top correlations
-    top_features = [f"{pair[0]} vs {pair[1]}" for pair in top_corr[:10]]
-    top_values = [pair[2] for pair in top_corr[:10]]
-    colors = ['red' if x < 0 else 'blue' for x in top_values]
-    
-    ax2.barh(range(len(top_features)), top_values, color=colors, alpha=0.7)
-    ax2.set_yticks(range(len(top_features)))
-    ax2.set_yticklabels(top_features)
-    ax2.set_xlabel('Correlation Coefficient')
-    ax2.set_title('Top 10 Feature Correlations', fontsize=14, fontweight='bold')
-    ax2.axvline(x=0, color='black', linestyle='-', alpha=0.3)
-    
-    plt.tight_layout()
-    st.pyplot(fig)
-    
-    # Display top correlations as text
-    st.write("**Top Feature Correlations:**")
-    for i, (feat1, feat2, corr_val) in enumerate(top_corr[:10]):
-        st.write(f"{i+1}. {feat1} ↔ {feat2}: {corr_val:.3f}")
+    with tab3:
+        st.subheader("Feature Correlation Matrix")
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
+        plt.title("Correlation Matrix")
+        st.pyplot(fig)
     
     with tab4:
         st.subheader("Statistical Summary")
