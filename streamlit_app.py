@@ -199,8 +199,8 @@ with st.expander("Model Development", expanded=False):
         st.write(f"- Binary: {binary}")
 
         st.code("""
-        f"- Numeric: {numeric}"   
-        f"- Binary: {binary}"
+        numeric = ['pH', 'Temperature', 'Colour']
+        binary = ['Taste', 'Odor', 'Fat', 'Turbidity']
 
         preprocessor = ColumnTransformer([
             ('num', StandardScaler(), numeric),
