@@ -33,16 +33,8 @@ with st.expander('Preprocessing'):
     'Temprature': 'Temperature',
     'Fat ': 'Fat'})
 
-    st.write("✅ Renamed columns: 'Temprature' → 'Temperature'")
-    st.write("✅ Renamed columns: 'Fat ' → 'Temperature'")
+    st.write("✅ Renamed columns: **'Temprature' → 'Temperature'**")
+    st.write("✅ Renamed columns: **'Fat ' → 'Temperature'**")
 
     st.write('**● Raw data**')
-    df
-    
-    st.write('**● X (Input)**')
-    X_raw = df.drop('Grade', axis=1)
-    X_raw
-    
-    st.write('**● y (Label)**')
-    y_raw = df['Grade']
-    y_raw
+    df.head()
