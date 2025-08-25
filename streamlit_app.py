@@ -189,7 +189,7 @@ with st.expander("Data Preprocessing"):
 numeric = ['pH', 'Temperature', 'Colour']
 binary = ['Taste', 'Odor', 'Fat', 'Turbidity']
 
-with st.expander("🤖 **Model Development**", expanded=False):
+with st.expander("Model Development", expanded=False):
     tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Training", "Evaluation"])
     
     with tab1:
@@ -197,7 +197,7 @@ with st.expander("🤖 **Model Development**", expanded=False):
         st.write("**Feature Groups:**")
         st.write(f"- Numeric: {numeric}")
         st.write(f"- Binary: {binary}")
-        
+
         st.code("""
         preprocessor = ColumnTransformer([
             ('num', StandardScaler(), numeric),
