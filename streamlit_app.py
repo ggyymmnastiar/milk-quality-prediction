@@ -141,7 +141,7 @@ with st.expander("Data Visualization"):
 
 # Change datatype for binary features
 binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
-label_map = {0: '0 (Not Satisfied)', 1: '(Satisfied)'}
+label_map = {0: '0 (Not Satisfied)', 1: '1 (Satisfied)'}
 
 for c in binary_cols:
     df[c] = df[c].map(label_map)
