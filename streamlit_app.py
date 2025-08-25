@@ -146,20 +146,19 @@ label_map = {0: '0 (Not Satisfied)', 1: '(Satisfied)'}
 for c in binary_cols:
     df[c] = df[c].map(label_map)
 
-df['Taste'].dtype
 # Input Features
 with st.sidebar:
     st.header('Input Features')
 
-    # pH = st.slider('**pH**', 0.0, 14.0, 6.6)
-    # Temperature = st.slider('**Temperature**', 30.0, 90.0, 44.22)
+    pH = st.slider('**pH**', 0.0, 14.0, 6.6)
+    Temperature = st.slider('**Temperature**', 30.0, 90.0, 44.22)
 
-    # Taste = st.selectbox('Taste', ('', ''))
-    # Odor = 
-    # Fat = 
-    # Turbidity = 
+    Taste = st.selectbox('Taste', ('0 (Not Satisfied)', '(Satisfied)'))
+    Odor = st.selectbox('Odor', ('0 (Not Satisfied)', '(Satisfied)'))
+    Fat = st.selectbox('Fat', ('0 (Not Satisfied)', '(Satisfied)'))
+    Turbidity = st.selectbox('Turbidity', ('0 (Not Satisfied)', '(Satisfied)'))
 
-    # Colour = st.slider('**Colour**', 240.0, 255.0, 251.84)
+    Colour = st.slider('**Colour**', 240.0, 255.0, 251.84)
     
 
 
