@@ -38,3 +38,17 @@ with st.expander('Preprocessing'):
 
     st.write('**● Raw data**')
     df
+
+    st.subheader("Feature Types")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("**Numeric Features:**")
+        st.write("- pH (float64)")
+        st.write("- Temperature (int64)")
+        st.write("- Colour (int64)")
+    with col2:
+        st.write("**Binary Features:**")
+        st.write("- Taste (0/1)")
+        st.write("- Odor (0/1)")
+        st.write("- Fat (0/1)")
+        st.write("- Turbidity (0/1)")
