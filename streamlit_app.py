@@ -60,7 +60,7 @@ with st.expander('Preprocessing'):
         st.write("- Fat (0/1)")
         st.write("- Turbidity (0/1)")
 
-with st.expander("�� **Exploratory Data Analysis**", expanded=False):
+with st.expander("Exploratory Data Analysis"):
     tab1, tab2, tab3, tab4 = st.tabs(["Target Distribution", "Feature Analysis", "Correlations", "Statistical Summary"])
     
     with tab1:
@@ -76,13 +76,13 @@ with st.expander("�� **Exploratory Data Analysis**", expanded=False):
         st.write(grade_stats)
     
     with tab2:
-        st.subheader("Numeric Features vs Grade")
+        st.subheader("Numeric Features Distribution")
         num_cols = ['pH', 'Temperature', 'Colour']
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         
         for i, col in enumerate(num_cols):
             sns.boxplot(data=df, x='Grade', y=col, ax=axes[i])
-            axes[i].set_title(f'{col} vs Grade')
+            axes[i].set_title(f'{col} Distribution')
         
         plt.tight_layout()
         st.pyplot(fig)
