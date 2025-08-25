@@ -144,17 +144,30 @@ def labeled_selectbox(name: str):
     option = st.selectbox(name, ['0 (Not Satisfied)', '1 (Satisfied)'])
     return 0 if option.startswith('0') else 1
 
+# Change datatype for binary features
+binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
+label_map = {0: '0 (Not Satisfied)', 1: '(Satisfied)'}
+
+for c in binary_cols:
+    df[c] = df[c].map(label_map)
+
+with st.expander("TEST"):
+    df
+
+
 # Input Features
 with st.sidebar:
     st.header('Input Features')
 
-    pH = st.slider('**pH**', 0.0, 14.0, 6.6)
-    Temperature = st.slider('**Temperature**', 30.0, 90.0, 44.22)
-    Taste = labeled_selectbox('**Taste**')
-    Odor = labeled_selectbox('**Odor**')
-    Fat = labeled_selectbox('**Fat**')
-    Turbidity = labeled_selectbox('**Turbidity**')
-    Colour = st.slider('**Colour**', 240.0, 255.0, 251.84)
+    # pH = st.slider('**pH**', 0.0, 14.0, 6.6)
+    # Temperature = st.slider('**Temperature**', 30.0, 90.0, 44.22)
+
+    # Taste = st.selectbox('Taste', ('', ''))
+    # Odor = 
+    # Fat = 
+    # Turbidity = 
+
+    # Colour = st.slider('**Colour**', 240.0, 255.0, 251.84)
     
 
 
