@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
 
 st.title('🥛 Milk Quality Prediction App')
 
@@ -188,12 +189,23 @@ with st.expander("Input Features"):
 numeric = ['pH', 'Temperature', 'Colour']
 binary = ['Taste', 'Odor', 'Fat', 'Turbidity']
 
-with st.expander("Data Preprocessing"):
-    preprocessor = ColumnTransformer([
+# Preprocessor
+preprocessor = ColumnTransformer([
                 ('num', StandardScaler(), numeric), 
                 ('bin', 'passthrough', binary)])
-                
-    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Training", "Evaluation"])
+
+# Pipeline
+pipeline = Pipeline([
+    ('preprocessor', preprocessor), 
+    ('model', RandomForestClassifier(random_state=101))
+])
+
+# Train Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                    test_size=0.2, random_state=101)
+
+with st.expander("Data Preprocessing"):            
+    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test Split", "Evaluation"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
@@ -214,6 +226,14 @@ with st.expander("Data Preprocessing"):
             ('preprocessor', preprocessor),
             ('model', RandomForestClassifier(random_state=101))
         ])
+        """, language='python')
+
+    with tab2:
+        st.subheader("Train | Test Split")
+
+        st.code(""""
+        X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                    test_size=0.2, random_state=101)
         """, language='python')
         
         
