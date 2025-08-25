@@ -3,7 +3,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 st.title('🥛 Milk Quality Prediction App')
 
@@ -180,21 +184,20 @@ with st.expander("Input Features"):
     st.write("**Combined Input With Dataframe**")
     combine_input_with_df
 
-# Data Preprocessing
-with st.expander("Data Preprocessing"):
-    st.write('Test')
-    st.write('Test 2')
-    st.write("**Grade Statistics:**")
-
+# Define features
 numeric = ['pH', 'Temperature', 'Colour']
 binary = ['Taste', 'Odor', 'Fat', 'Turbidity']
 
-with st.expander("Model Development", expanded=False):
+with st.expander("Data Preprocessing"):
+    preprocessor = ColumnTransformer([
+                ('num', StandardScaler(), numeric), 
+                ('bin', 'passthrough', binary)])
+                
     tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Training", "Evaluation"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
-        st.write("**Feature Groups:**")
+        st.write("**Feature Groups**")
         st.write(f"- Numeric: {numeric}")
         st.write(f"- Binary: {binary}")
 
