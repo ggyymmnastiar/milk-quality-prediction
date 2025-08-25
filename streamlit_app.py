@@ -60,6 +60,7 @@ with st.expander('Preprocessing'):
         st.write("- Fat (0/1)")
         st.write("- Turbidity (0/1)")
 
+# EDA
 with st.expander("Exploratory Data Analysis"):
     tab1, tab2, tab3, tab4 = st.tabs(["Target Distribution", "Feature Analysis", "Correlations", "Statistical Summary"])
     
@@ -109,3 +110,7 @@ with st.expander("Exploratory Data Analysis"):
     with tab4:
         st.subheader("Statistical Summary")
         st.write(df.describe())
+
+# Input Features
+with st.sidebar:
+    st.header('Input features')
