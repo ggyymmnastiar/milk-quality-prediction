@@ -37,4 +37,4 @@ with st.expander('Preprocessing'):
     st.write("✅ Renamed columns: **'Fat ' → 'Temperature'**")
 
     st.write('**● Raw data**')
-    df.head()
+    df
