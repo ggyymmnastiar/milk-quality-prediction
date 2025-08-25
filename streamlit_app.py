@@ -9,6 +9,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, mean_absolute_percentage_error, confusion_matrix, classification_report, ConfusionMatrixDisplay
 
 st.title('🥛 Milk Quality Prediction App')
 
@@ -206,6 +207,8 @@ y = df['Grade']
 X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                             test_size=0.2, random_state=101)
 
+pipeline.fit(X_train, y_train)
+y_pred = pipeline.predict(X_test)
 
 with st.expander("Data Preprocessing"):            
     tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Evaluation"])
@@ -256,7 +259,29 @@ with st.expander("Data Preprocessing"):
             st.metric("High Precision", "0.98")
             st.metric("Low Precision", "1.00")
             st.metric("Medium Precision", "1.00")
+        
+        if st.button("Train & Evaluate"):
+            # fit
+            pipeline.fit(X_train, y_train)
+            # predict
+            y_pred = pipeline.predict(X_test)
+            # confusion matrix
+            cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
 
+            # report
+            st.subheader("Classification Report")
+            st.text(classification_report(y_test, y_pred, digits=4))
+
+            # plot CM
+            st.subheader("Confusion Matrix")
+            fig, ax = plt.subplots(figsize=(6,5), dpi=200)
+            disp = ConfusionMatrixDisplay(cm, display_labels=pipeline.named_steps['model'].classes_)
+            disp.plot(ax=ax, cmap='YlGnBu', colorbar=True, values_format='d')
+            ax.set_xlabel('Predicted label')
+            ax.set_ylabel('True label')
+            ax.grid(False)
+            ax.set_aspect('equal')
+            st.pyplot(fig)
 
 
 
