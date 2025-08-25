@@ -143,5 +143,7 @@ with st.expander("Exploratory Data Analysis"):
 # Input Features
 with st.sidebar:
     st.header('Input Features')
-    # bill_depth_mm = st.slider('Bill depth (mm)', 13.1, 21.5, 17.2)
+    #   gender = st.selectbox('Gender', ('male', 'female'))
     pH = st.slider('pH', 0.0, 14.0, 6.6)
+    Temperature = st.slider('Temperature', 30.0, 90.0, 44.22)
+    Taste = st.selectbox('Taste', ('0', '1'))
