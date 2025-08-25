@@ -199,6 +199,9 @@ with st.expander("Model Development", expanded=False):
         st.write(f"- Binary: {binary}")
 
         st.code("""
+        f"- Numeric: {numeric}"   
+        f"- Binary: {binary}"
+
         preprocessor = ColumnTransformer([
             ('num', StandardScaler(), numeric),
             ('bin', 'passthrough', binary)
