@@ -12,7 +12,7 @@ with st.expander('Data Overview'):
     
     st.write(f"**● Total Samples:** {len(df)}")
     st.write(f"**● Features:** {len(df.columns)}")
-    st.write(f"**● Target Classes:** {df['Grade'].nunique()}")
+    st.write(f"**● Target Classes:** {df['Grade'].unique()}")
     
     col1, col2 = st.columns(2)
     with col1:
