@@ -186,6 +186,30 @@ with st.expander("Data Preprocessing"):
     st.write('Test 2')
     st.write("**Grade Statistics:**")
 
+numeric = ['pH', 'Temperature', 'Colour']
+binary = ['Taste', 'Odor', 'Fat', 'Turbidity']
+
+with st.expander("🤖 **Model Development**", expanded=False):
+    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Training", "Evaluation"])
+    
+    with tab1:
+        st.subheader("Preprocessing Pipeline")
+        st.code("""
+        preprocessor = ColumnTransformer([
+            ('num', StandardScaler(), numeric),
+            ('bin', 'passthrough', binary)
+        ])
+        
+        pipeline = Pipeline([
+            ('preprocessor', preprocessor),
+            ('model', RandomForestClassifier(random_state=101))
+        ])
+        """, language='python')
+        
+        st.write("**Feature Groups:**")
+        st.write(f"- Numeric: {numeric}")
+        st.write(f"- Binary: {binary}")
+
 
 
 
