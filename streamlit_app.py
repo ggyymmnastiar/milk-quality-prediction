@@ -28,8 +28,8 @@ with st.expander('Data Overview'):
     y_raw = df['Grade']
     y_raw
 
-# Data Preprocessing
-with st.expander('Preprocessing'):
+# Data Preparation & EDA
+with st.expander('Data Preparation & EDA'):
     st.subheader("✨ Data Cleaning")
 
     df = df.rename(columns={
