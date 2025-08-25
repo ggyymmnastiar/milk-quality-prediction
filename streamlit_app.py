@@ -194,6 +194,10 @@ with st.expander("🤖 **Model Development**", expanded=False):
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
+        st.write("**Feature Groups:**")
+        st.write(f"- Numeric: {numeric}")
+        st.write(f"- Binary: {binary}")
+        
         st.code("""
         preprocessor = ColumnTransformer([
             ('num', StandardScaler(), numeric),
@@ -206,9 +210,7 @@ with st.expander("🤖 **Model Development**", expanded=False):
         ])
         """, language='python')
         
-        st.write("**Feature Groups:**")
-        st.write(f"- Numeric: {numeric}")
-        st.write(f"- Binary: {binary}")
+        
 
 
 
