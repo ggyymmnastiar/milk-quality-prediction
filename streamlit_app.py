@@ -36,7 +36,6 @@ with st.expander('Preprocessing'):
     'Temprature': 'Temperature',
     'Fat ': 'Fat'})
 
-    # Rename columns
     st.write("● Renamed columns **'Temprature' → 'Temperature'**")
     st.write("● Renamed columns **'Fat ' → 'Fat'**")
 
@@ -140,10 +139,20 @@ with st.expander("Exploratory Data Analysis"):
         st.subheader("Statistical Summary")
         st.write(df.describe())
 
+def labeled_selectbox(name: str):
+    option = st.selectbox(name, ['0 (Not Satisfied)', '1 (Satisfied)'])
+    return 0 if option.startswith('0') else 1
 # Input Features
 with st.sidebar:
     st.header('Input Features')
     #   gender = st.selectbox('Gender', ('male', 'female'))
+
     pH = st.slider('pH', 0.0, 14.0, 6.6)
     Temperature = st.slider('Temperature', 30.0, 90.0, 44.22)
-    Taste = st.selectbox('Taste', ('0', '1'))
+    Taste = labeled_selectbox('Taste')
+    Odor = labeled_selectbox('Odor')
+    Fat = labeled_selectbox('Fat')
+    Turbidity = labeled_selectbox('Turbidity')
+    Colour = st.slider('Colour', 240.0, 255.0, 251.84)
+
+
