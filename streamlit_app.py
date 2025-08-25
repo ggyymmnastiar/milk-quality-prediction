@@ -10,9 +10,9 @@ st.info('This is app builds a machine learning model to predict milk quality usi
 with st.expander('Data Overview'):
     df = pd.read_csv('https://raw.githubusercontent.com/ggyymmnastiar/g-milkqualityprediction/refs/heads/master/milk_dataset.csv')
     
-    st.write(f"**Total Samples:** {len(df)}")
-    st.write(f"**Features:** {len(df.columns)}")
-    st.write(f"**Target Classes:** {df['Grade'].nunique()}")
+    st.write(f"**● Total Samples:** {len(df)}")
+    st.write(f"**● Features:** {len(df.columns)}")
+    st.write(f"**● Target Classes:** {df['Grade'].nunique()}")
     
     col1, col2 = st.columns(2)
     with col1:
