@@ -62,8 +62,8 @@ with st.expander('Preprocessing'):
         st.write("- Fat (0/1)")
         st.write("- Turbidity (0/1)")
 
-# EDA
-with st.expander("Exploratory Data Analysis"):
+# Data Visualization
+with st.expander("Data Visualization"):
     tab1, tab2, tab3, tab4 = st.tabs(["Target Distribution", "Feature Analysis", "Correlations", "Statistical Summary"])
     
     # Target Distribution
@@ -139,13 +139,14 @@ with st.expander("Exploratory Data Analysis"):
         st.subheader("Statistical Summary")
         st.write(df.describe())
 
+# Function for Rename Binary option
 def labeled_selectbox(name: str):
     option = st.selectbox(name, ['0 (Not Satisfied)', '1 (Satisfied)'])
     return 0 if option.startswith('0') else 1
+
 # Input Features
 with st.sidebar:
     st.header('Input Features')
-    #   gender = st.selectbox('Gender', ('male', 'female'))
 
     pH = st.slider('**pH**', 0.0, 14.0, 6.6)
     Temperature = st.slider('**Temperature**', 30.0, 90.0, 44.22)
@@ -154,5 +155,8 @@ with st.sidebar:
     Fat = labeled_selectbox('**Fat**')
     Turbidity = labeled_selectbox('**Turbidity**')
     Colour = st.slider('**Colour**', 240.0, 255.0, 251.84)
+    
+
+
 
 
