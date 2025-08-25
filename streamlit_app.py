@@ -157,7 +157,33 @@ with st.sidebar:
     Fat = st.selectbox('Fat', ('0 (Not Satisfied)', '(Satisfied)'))
     Turbidity = st.selectbox('Turbidity', ('0 (Not Satisfied)', '(Satisfied)'))
     Colour = st.slider('Colour', 240.0, 255.0, 251.84)
-    
+
+    # Create a DataFrame for the input features
+    data = {'pH': pH,
+            'Temperature': Temperature,
+            'Taste': Taste,
+            'Odor': Odor,
+            'Fat': Fat,
+            'Turbidity': Turbidity,
+            'Colour': Colour}
+                
+    input_df = pd.DataFrame(data=data, index=[0])
+    combine_input_with_df = pd.concat([input_df, df], axis=0)
+
+
+
+# Input Features
+with st.expander("Input Features"):
+    st.write("**Our Input**")
+    input_df
+
+    st.write("**Combined Input With Dataframe**")
+    combine_input_with_df
+
+
+# Data Preprocessing
+with st.expander("Data Preprocessing"):
+
 
 
 
