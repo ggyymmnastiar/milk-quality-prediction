@@ -28,7 +28,8 @@ with st.expander('Data Overview'):
 
 # Data Preprocessing
 with st.expander('Preprocessing'):
-    st.subheader("Data Cleaning")
+    st.subheader("<u>Data Cleaning</u> ")
+
     df = df.rename(columns={
     'Temprature': 'Temperature',
     'Fat ': 'Fat'})
@@ -43,7 +44,7 @@ with st.expander('Preprocessing'):
     st.write('**● Final Data**')
     df
 
-    st.subheader("Feature Types")
+    st.subheader("<u>Feature Types</u> ")
     col1, col2 = st.columns(2)
     with col1:
         st.write("**Numeric Features:**")
