@@ -11,17 +11,16 @@ with st.expander('Data Overview'):
     df = pd.read_csv('https://raw.githubusercontent.com/ggyymmnastiar/g-milkqualityprediction/refs/heads/master/milk_dataset.csv')
     
     st.write(f"**● Total Samples:** {len(df)}")
-    df.info()
     
     st.write(f"**● Target Classes:** {df['Grade'].unique()}")
     
-    st.write('**Raw data**')
+    st.write('**● Raw data**')
     df
     
-    st.write('**X (Input)**')
+    st.write('**● X (Input)**')
     X_raw = df.drop('Grade', axis=1)
     X_raw
     
-    st.write('**y (Label)**')
+    st.write('**● y (Label)**')
     y_raw = df['Grade']
     y_raw
