@@ -36,9 +36,11 @@ with st.expander('Preprocessing'):
     'Temprature': 'Temperature',
     'Fat ': 'Fat'})
 
+    # Rename columns
     st.write("● Renamed columns **'Temprature' → 'Temperature'**")
     st.write("● Renamed columns **'Fat ' → 'Fat'**")
 
+    # Check missing value
     missing_counts = df.isnull().sum()
     st.write("**● Missing Values per Column:**")
     st.write(missing_counts)
@@ -46,6 +48,7 @@ with st.expander('Preprocessing'):
     st.write('**● Final Data**')
     df
 
+    # Features Types
     st.subheader("🔡🔢 Feature Types")
     col1, col2 = st.columns(2)
     with col1:
@@ -64,19 +67,19 @@ with st.expander('Preprocessing'):
 with st.expander("Exploratory Data Analysis"):
     tab1, tab2, tab3, tab4 = st.tabs(["Target Distribution", "Feature Analysis", "Correlations", "Statistical Summary"])
     
+    # Target Distribution
     with tab1:
         st.subheader("Milk Grade Distribution")
         
-        # Improved visualization with better styling
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
-        # Count plot with better colors
+        # Milk Grade Distribution
         sns.countplot(data=df, x='Grade', palette='Set2', ax=ax1)
         ax1.set_title("Milk Grade Distribution", fontsize=14, fontweight='bold')
         ax1.set_xlabel("Grade", fontsize=12)
         ax1.set_ylabel("Count", fontsize=12)
         
-        # Pie chart for better proportion visualization
+        # Grade Proportion
         grade_counts = df['Grade'].value_counts()
         ax2.pie(grade_counts.values, labels=grade_counts.index, autopct='%1.1f%%', 
                 colors=sns.color_palette('Set2'), startangle=90)
@@ -85,19 +88,22 @@ with st.expander("Exploratory Data Analysis"):
         plt.tight_layout()
         st.pyplot(fig)
         
-        # Enhanced statistics display
+        # Grade Statistics
         col1, col2 = st.columns(2)
         with col1:
             st.write("**Grade Statistics:**")
             st.dataframe(grade_counts.reset_index().rename(columns={'index': 'Grade', 'Grade': 'Count'}))
         
+        # Grade Percentages
         with col2:
             st.write("**Grade Percentages:**")
             percentages = (grade_counts / len(df) * 100).round(2)
             for grade, pct in percentages.items():
                 st.write(f"Grade {grade}: {pct}%")
-        
+    
+    # Feature Analysis
     with tab2:
+        # Numeric Features Distribution
         st.subheader("Numeric Features Distribution")
         num_cols = ['pH', 'Temperature', 'Colour']
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
@@ -109,6 +115,7 @@ with st.expander("Exploratory Data Analysis"):
         plt.tight_layout()
         st.pyplot(fig)
         
+        # Binary Features Distribution
         st.subheader("Binary Features Distribution")
         cat_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
         fig, axes = plt.subplots(2, 2, figsize=(12, 10))
@@ -121,12 +128,55 @@ with st.expander("Exploratory Data Analysis"):
         plt.tight_layout()
         st.pyplot(fig)
     
-    with tab3:
-        st.subheader("Feature Correlation Matrix")
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
-        plt.title("Correlation Matrix")
-        st.pyplot(fig)
+    # Feature Correlation Matrix
+with tab3:
+    st.subheader("Feature Correlation Analysis")
+    
+    # Calculate correlation matrix
+    corr_matrix = df.corr(numeric_only=True)
+    
+    # Create a more informative correlation visualization
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    
+    # Heatmap with better styling
+    sns.heatmap(corr_matrix, annot=True, cmap='RdBu_r', center=0, 
+                square=True, ax=ax1, fmt='.2f', cbar_kws={'shrink': 0.8})
+    ax1.set_title("Correlation Matrix", fontsize=14, fontweight='bold')
+    
+    # Top correlations
+    # Get upper triangle of correlation matrix
+    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+    corr_upper = corr_matrix.mask(mask)
+    
+    # Find top correlations
+    top_corr = []
+    for i in range(len(corr_matrix.columns)):
+        for j in range(i+1, len(corr_matrix.columns)):
+            if not pd.isna(corr_upper.iloc[i, j]):
+                top_corr.append((corr_matrix.columns[i], corr_matrix.columns[j], 
+                               corr_upper.iloc[i, j]))
+    
+    top_corr.sort(key=lambda x: abs(x[2]), reverse=True)
+    
+    # Plot top correlations
+    top_features = [f"{pair[0]} vs {pair[1]}" for pair in top_corr[:10]]
+    top_values = [pair[2] for pair in top_corr[:10]]
+    colors = ['red' if x < 0 else 'blue' for x in top_values]
+    
+    ax2.barh(range(len(top_features)), top_values, color=colors, alpha=0.7)
+    ax2.set_yticks(range(len(top_features)))
+    ax2.set_yticklabels(top_features)
+    ax2.set_xlabel('Correlation Coefficient')
+    ax2.set_title('Top 10 Feature Correlations', fontsize=14, fontweight='bold')
+    ax2.axvline(x=0, color='black', linestyle='-', alpha=0.3)
+    
+    plt.tight_layout()
+    st.pyplot(fig)
+    
+    # Display top correlations as text
+    st.write("**Top Feature Correlations:**")
+    for i, (feat1, feat2, corr_val) in enumerate(top_corr[:10]):
+        st.write(f"{i+1}. {feat1} ↔ {feat2}: {corr_val:.3f}")
     
     with tab4:
         st.subheader("Statistical Summary")
@@ -135,7 +185,7 @@ with st.expander("Exploratory Data Analysis"):
 # Input Features
 with st.sidebar:
     st.header('Input features')
-    st.header('Input features')
+    
     island = st.selectbox('Island', ('Biscoe', 'Dream', 'Torgersen'))
     bill_length_mm = st.slider('Bill length (mm)', 32.1, 59.6, 43.9)
     bill_depth_mm = st.slider('Bill depth (mm)', 13.1, 21.5, 17.2)
