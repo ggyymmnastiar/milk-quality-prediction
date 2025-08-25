@@ -97,48 +97,29 @@ with st.expander("Exploratory Data Analysis"):
             for grade, pct in percentages.items():
                 st.write(f"Grade {grade}: {pct}%")
         
-with tab2:
-    st.subheader("Numeric Features Analysis")
-    
-    # Distribution plots with better styling
-    num_cols = ['pH', 'Temperature', 'Colour']
-    fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-    
-    for i, col in enumerate(num_cols):
-        # Histogram
-        sns.histplot(data=df, x=col, hue='Grade', bins=20, alpha=0.7, ax=axes[0, i])
-        axes[0, i].set_title(f'{col} Distribution by Grade', fontsize=12)
+    with tab2:
+        st.subheader("Numeric Features Distribution")
+        num_cols = ['pH', 'Temperature', 'Colour']
+        fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         
-        # Box plot
-        sns.boxplot(data=df, x='Grade', y=col, ax=axes[1, i], palette='Set2')
-        axes[1, i].set_title(f'{col} Box Plot by Grade', fontsize=12)
-    
-    plt.tight_layout()
-    st.pyplot(fig)
-    
-    # Binary features with better visualization
-    st.subheader("Binary Features Analysis")
-    cat_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
-    
-    # Create a more informative visualization
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-    
-    for i, col in enumerate(cat_cols):
-        ax = axes[i//2, i%2]
+        for i, col in enumerate(num_cols):
+            sns.boxplot(data=df, x='Grade', y=col, ax=axes[i])
+            axes[i].set_title(f'{col} Distribution')
         
-        # Create cross-tabulation
-        crosstab = pd.crosstab(df[col], df['Grade'], normalize='index') * 100
+        plt.tight_layout()
+        st.pyplot(fig)
         
-        # Stacked bar chart
-        crosstab.plot(kind='bar', stacked=True, ax=ax, color=sns.color_palette('Set2'))
-        ax.set_title(f'{col} vs Grade (%)', fontsize=12, fontweight='bold')
-        ax.set_xlabel(col)
-        ax.set_ylabel('Percentage (%)')
-        ax.legend(title='Grade', bbox_to_anchor=(1.05, 1), loc='upper left')
-        ax.tick_params(axis='x', rotation=0)
-    
-    plt.tight_layout()
-    st.pyplot(fig)
+        st.subheader("Binary Features Distribution")
+        cat_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
+        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+        
+        for i, col in enumerate(cat_cols):
+            ax = axes[i//2, i%2]
+            sns.countplot(data=df, x=col, hue='Grade', ax=ax)
+            ax.set_title(f'{col} vs Grade')
+        
+        plt.tight_layout()
+        st.pyplot(fig)
     
     with tab3:
         st.subheader("Feature Correlation Matrix")
