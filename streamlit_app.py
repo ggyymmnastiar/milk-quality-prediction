@@ -253,8 +253,8 @@ with st.expander("Data Preprocessing"):
                                            test_size=0.2, random_state=101)
         """, language='python')
 
-        st.title("Milk Quality - Train & Evaluate")
-        if st.button("Train & Evaluate"):
+        st.subheader("Train Data")
+        if st.button("Train the Data (.fit)"):
             # fit
             pipeline.fit(X_train, y_train)
             # predict
@@ -262,9 +262,15 @@ with st.expander("Data Preprocessing"):
             # confusion matrix
             cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
             
-            # report
+            # Buat classification report sebagai dictionary
+            report_dict = classification_report(y_test, y_pred, output_dict=True, digits=4)
+
+            # Convert ke DataFrame
+            report_df = pd.DataFrame(report_dict).transpose()
+
+            # Tampilkan sebagai tabel
             st.subheader("Classification Report")
-            st.text(classification_report(y_test, y_pred, digits=4))
+            st.dataframe(report_df, use_container_width=True)
 
 
 
