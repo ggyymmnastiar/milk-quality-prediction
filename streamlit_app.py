@@ -218,7 +218,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
 
 # Data Prepocessing
 with st.expander("Data Preprocessing"):            
-    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Hyperparameter Tuning"])
+    tab1, tab2 = st.tabs(["Pipeline Setup", "Train | Test"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline111")
@@ -279,11 +279,11 @@ with st.expander("Data Preprocessing"):
             disp.plot(cmap='Blues', ax=ax)
             st.pyplot(fig) # Tampilkan plot di Streamlit
 
-    with tab3:
-        st.subheader("Hyperparameter Tuning (GridSearchCV)")
-        st.info("Tuning was performed offline to find the best model parameters. The following setup was used.")
+    # with tab3:
+    #     st.subheader("Hyperparameter Tuning (GridSearchCV)")
+    #     st.info("Tuning was performed offline to find the best model parameters. The following setup was used.")
         
-        st.write("**Parameter Grid**")
+    #     st.write("**Parameter Grid**")
         # st.code("""
         # parameter = {
         #     'model__n_estimators': [200, 400, 800, 1200],
