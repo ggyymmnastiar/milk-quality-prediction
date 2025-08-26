@@ -334,7 +334,7 @@ final_pipe.fit(X_train, y_train)
 prediction = final_pipe.predict(input_df)
 prediction_proba = final_pipe.predict_proba(input_df) 
 
-df_prediction_proba = pd.DataFrame(prediction_proba)
+df_prediction_proba = pd.DataFrame(prediction_proba, columns=final_pipe.classes_)
 df_prediction_proba.columns = ['high', 'low', 'medium']
 df_prediction_proba.rename(columns={0: 'high',
                                  1: 'low',
