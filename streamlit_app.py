@@ -145,12 +145,12 @@ with st.expander("Data Visualization"):
         st.subheader("Statistical Summary")
         st.write(df.describe())
 
-# Change datatype for binary features
-binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
-label_map = {0: '0 (Not Satisfied)', 1: '1 (Satisfied)'}
+# # Change datatype for binary features (GANTI INI BRO YA JANGAN LUPA)
+# binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
+# label_map = {0: '0 (Not Satisfied)', 1: '1 (Satisfied)'}
 
-for c in binary_cols:
-    df[c] = df[c].map(label_map)
+# for c in binary_cols:
+#     df[c] = df[c].map(label_map)
 
 # Input Features
 with st.sidebar:
@@ -158,11 +158,20 @@ with st.sidebar:
 
     pH = st.slider('pH', 0.0, 14.0, 6.6)
     Temperature = st.slider('Temperature', 30.0, 90.0, 44.22)
-    Taste = st.selectbox('Taste', ('0 (Not Satisfied)', '1 (Satisfied)'))
-    Odor = st.selectbox('Odor', ('0 (Not Satisfied)', '1 (Satisfied)'))
-    Fat = st.selectbox('Fat', ('0 (Not Satisfied)', '1 (Satisfied)'))
-    Turbidity = st.selectbox('Turbidity', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    
+    Taste_label = st.selectbox('Taste', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Odor_label = st.selectbox('Odor', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Fat_label = st.selectbox('Fat', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    Turbidity_label = st.selectbox('Turbidity', ('0 (Not Satisfied)', '1 (Satisfied)'))
+    
     Colour = st.slider('Colour', 240.0, 255.0, 251.84)
+
+    label_to_num = {'0 (Not Satisfied)': 0, '1 (Satisfied)': 1}
+
+    Taste = label_to_num[Taste_label]
+    Odor = label_to_num[Odor_label]
+    Fat = label_to_num[Fat_label]
+    Turbidity = label_to_num[Turbidity_label]
 
     # Create a DataFrame for the input features
     data = {'pH': pH,
