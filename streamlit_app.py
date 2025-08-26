@@ -163,7 +163,7 @@ with st.sidebar:
     Odor_label = st.selectbox('Odor', ('0 (Not Satisfied)', '1 (Satisfied)'))
     Fat_label = st.selectbox('Fat', ('0 (Not Satisfied)', '1 (Satisfied)'))
     Turbidity_label = st.selectbox('Turbidity', ('0 (Not Satisfied)', '1 (Satisfied)'))
-    
+
     Colour = st.slider('Colour', 240.0, 255.0, 251.84)
 
     label_to_num = {'0 (Not Satisfied)': 0, '1 (Satisfied)': 1}
@@ -252,6 +252,19 @@ with st.expander("Data Preprocessing"):
         X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                            test_size=0.2, random_state=101)
         """, language='python')
+
+        st.title("Milk Quality - Train & Evaluate")
+        if st.button("Train & Evaluate"):
+            # fit
+            pipeline.fit(X_train, y_train)
+            # predict
+            y_pred = pipeline.predict(X_test)
+            # confusion matrix
+            cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
+            
+            # report
+            st.subheader("Classification Report")
+            st.text(classification_report(y_test, y_pred, digits=4))
 
 
 
