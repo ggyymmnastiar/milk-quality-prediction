@@ -285,42 +285,40 @@ with st.expander("Data Preprocessing"):
         
         st.write("**Parameter Grid**")
         st.code("""
-                    from sklearn.model_selection import GridSearchCV, StratifiedKFold
+        parameter = {
+            'model__n_estimators': [200, 400, 800, 1200],
+            'model__max_depth': [None, 8, 12, 20, 30],
+            'model__min_samples_split': [2, 5, 10, 20],
+            'model__min_samples_leaf': [1, 2, 4, 8],
+            'model__max_features': ['sqrt', 'log2', 0.5, 0.8],
+            'model__bootstrap': [True, False],
+            'model__class_weight': [None, 'balanced']
+        }
 
-                    parameter = {
-                        'model__n_estimators': [200, 400, 800, 1200],
-                        'model__max_depth': [None, 8, 12, 20, 30],
-                        'model__min_samples_split': [2, 5, 10, 20],
-                        'model__min_samples_leaf': [1, 2, 4, 8],
-                        'model__max_features': ['sqrt', 'log2', 0.5, 0.8],
-                        'model__bootstrap': [True, False],
-                        'model__class_weight': [None, 'balanced']
-                    }
+        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-                    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        grid_search = GridSearchCV(estimator=pipeline, 
+                            param_grid=parameter,
+                            scoring='f1_macro',
+                            cv=cv,
+                            n_jobs=-1,
+                            verbose=1,
+                            refit=True)
 
-                    grid_search = GridSearchCV(estimator=pipeline, 
-                                        param_grid=parameter,
-                                        scoring='f1_macro',
-                                        cv=cv,
-                                        n_jobs=-1,
-                                        verbose=1,
-                                        refit=True)
-
-                    # This line is run offline, not in the app
-                    # grid_search.fit(X_train, y_train)
-                            """, language='python')
+        # This line is run offline, not in the app
+        # grid_search.fit(X_train, y_train)
+                """, language='python')
 
         st.write("**Best Parameters Found**")
         st.success("The best parameters found from the grid search are:")
         st.code("""
-                {
-                    'model__bootstrap': True,
-                    'model__class_weight': None,
-                    'model__max_features': 'sqrt',
-                    'model__min_samples_leaf': 1,
-                    'model__min_samples_split': 2,
-                    'model__n_estimators': 200
-                }
-                        """, language='python')
+        {
+            'model__bootstrap': True,
+            'model__class_weight': None,
+            'model__max_features': 'sqrt',
+            'model__min_samples_leaf': 1,
+            'model__min_samples_split': 2,
+            'model__n_estimators': 200
+        }
+                """, language='python')
 
