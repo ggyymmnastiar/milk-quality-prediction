@@ -262,9 +262,9 @@ with st.expander("Data Preprocessing"):
             # confusion matrix
             cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
             
-            # report
-            st.subheader("Classification Report")
-            st.text(classification_report(y_test, y_pred, digits=4))
+        # report
+        st.subheader("Classification Report")
+        st.text(classification_report(y_test, y_pred, digits=4))
 
 
 
