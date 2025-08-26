@@ -145,13 +145,6 @@ with st.expander("Data Visualization"):
         st.subheader("Statistical Summary")
         st.write(df.describe())
 
-# # Change datatype for binary features (GANTI INI BRO YA JANGAN LUPA)
-# binary_cols = ['Taste', 'Odor', 'Fat', 'Turbidity']
-# label_map = {0: '0 (Not Satisfied)', 1: '1 (Satisfied)'}
-
-# for c in binary_cols:
-#     df[c] = df[c].map(label_map)
-
 # Input Features
 with st.sidebar:
     st.header('Input Features')
@@ -255,29 +248,28 @@ with st.expander("Data Preprocessing"):
 
         st.subheader("Train Data")
         if st.button("Train the Data (.fit)"):
-            # fit
+            
             pipeline.fit(X_train, y_train)
-            # predict
+            
             y_pred = pipeline.predict(X_test)
             
-            # Buat classification report sebagai dictionary
             report_dict = classification_report(y_test, y_pred, output_dict=True, digits=4)
 
-            # Convert ke DataFrame
+            # Convert to DataFrame
             report_df = pd.DataFrame(report_dict).transpose()
 
-            # Tampilkan sebagai tabel
+            # Show table
             st.subheader("Classification Report")
             st.dataframe(report_df, use_container_width=True)
 
-            # confusion matrix
+            # Confusion Matrix
             cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
             st.subheader("Confusion Matrix")
-            fig, ax = plt.subplots() # Buat figure dan axes baru
+            fig, ax = plt.subplots() 
             disp = ConfusionMatrixDisplay(confusion_matrix=cm, 
                                         display_labels=pipeline.classes_)
             disp.plot(cmap='Blues', ax=ax)
-            st.pyplot(fig) # Tampilkan plot di Streamlit
+            st.pyplot(fig) 
 
     with tab3:
         st.subheader("Hyperparameter Tuning (GridSearchCV)")
@@ -340,8 +332,6 @@ df_prediction_proba.rename(columns={0: 'high',
                                  1: 'low',
                                  2: 'medium'})
 
-
-
 # Display predicted species
 st.subheader('Predicted Grade')
 
@@ -370,6 +360,4 @@ st.dataframe(df_prediction_proba,
                ),
              }, hide_index=True)
 
-# option_grade = np.array(['high', 'low', 'medium'])
-# st.success(str(option_grade[prediction][0]))
 st.success(f"Predicted Grade: {prediction[0]}")
