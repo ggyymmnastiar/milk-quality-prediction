@@ -331,10 +331,16 @@ final_pipe = Pipeline([
 ])
 
 final_pipe.fit(X_train, y_train)
-prediction = final_pipe.predict(data)
-prediction_proba = final_pipe.predict_proba(data) 
+prediction = final_pipe.predict(input_df)
+prediction_proba = final_pipe.predict_proba(input_df) 
 
 df_prediction_proba = pd.DataFrame(prediction_proba)
+df_prediction_proba.columns = ['high', 'low', 'medium']
+df_prediction_proba.rename(columns={0: 'high',
+                                 1: 'low',
+                                 2: 'medium'})
+
+
 
 # Display predicted species
 st.subheader('Predicted Grade')
