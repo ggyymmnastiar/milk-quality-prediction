@@ -218,7 +218,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
 
 # Data Prepocessing
 with st.expander("Data Preprocessing"):            
-    tab1, tab2 = st.tabs(["Pipeline Setup", "Train | Test", "Hyperparameter Tuning"])
+    tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Hyperparameter Tuning"])
     
     with tab1:
         st.subheader("Preprocessing Pipeline")
