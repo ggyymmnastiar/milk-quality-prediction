@@ -157,7 +157,7 @@ with st.sidebar:
     st.header('Input Features')
 
     pH = st.slider('pH', 0.0, 14.0, 6.6)
-    Temperature = st.slider('Temperature', 30.0, 90.0, 44.22)
+    Temperature = st.slider('Temperature', 10.0, 90.0, 44.22)
     
     Taste_label = st.selectbox('Taste', ('0 (Not Satisfied)', '1 (Satisfied)'))
     Odor_label = st.selectbox('Odor', ('0 (Not Satisfied)', '1 (Satisfied)'))
