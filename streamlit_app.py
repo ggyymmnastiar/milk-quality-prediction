@@ -370,5 +370,6 @@ st.dataframe(df_prediction_proba,
                ),
              }, hide_index=True)
 
-option_grade = np.array(['high', 'low', 'medium'])
-st.success(str(option_grade[prediction][0]))
+# option_grade = np.array(['high', 'low', 'medium'])
+# st.success(str(option_grade[prediction][0]))
+st.success(f"Predicted Grade: {prediction[0]}")
