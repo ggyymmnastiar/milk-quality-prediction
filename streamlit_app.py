@@ -306,7 +306,7 @@ with st.expander("Data Preprocessing"):
                             refit=True)
 
         # This line is run offline, not in the app
-        # grid_search.fit(X_train, y_train)
+        grid_search.fit(X_train, y_train)
                 """, language='python')
 
         st.write("**Best Parameters Found**")
@@ -322,3 +322,47 @@ with st.expander("Data Preprocessing"):
         }
                 """, language='python')
 
+# Final Pipe with Best Param
+final_pipe = Pipeline([
+    ('preprocessing', preprocessor),
+    ('model', RandomForestClassifier(bootstrap=True, class_weight=None, max_features='sqrt', 
+                                     min_samples_leaf=1, min_samples_split=2, n_estimators=200)                 
+     )
+])
+
+final_pipe.fit(X_train, y_train)
+prediction = final_pipe.predict(data)
+prediction_proba = final_pipe.predict_proba(data) 
+
+df_prediction_proba = pd.DataFrame(prediction_proba)
+
+# Display predicted species
+st.subheader('Predicted Grade')
+
+st.dataframe(df_prediction_proba,
+             column_config={
+               'high': st.column_config.ProgressColumn(
+                 'high',
+                 format='%f',
+                 width='medium',
+                 min_value=0,
+                 max_value=1
+               ),
+               'low': st.column_config.ProgressColumn(
+                 'low',
+                 format='%f',
+                 width='medium',
+                 min_value=0,
+                 max_value=1
+               ),
+               'medium': st.column_config.ProgressColumn(
+                 'medium',
+                 format='%f',
+                 width='medium',
+                 min_value=0,
+                 max_value=1
+               ),
+             }, hide_index=True)
+
+option_grade = np.array(['high', 'low', 'medium'])
+st.success(str(option_grade[prediction][0]))
