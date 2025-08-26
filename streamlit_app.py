@@ -259,8 +259,6 @@ with st.expander("Data Preprocessing"):
             pipeline.fit(X_train, y_train)
             # predict
             y_pred = pipeline.predict(X_test)
-            # confusion matrix
-            cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
             
             # Buat classification report sebagai dictionary
             report_dict = classification_report(y_test, y_pred, output_dict=True, digits=4)
@@ -272,5 +270,13 @@ with st.expander("Data Preprocessing"):
             st.subheader("Classification Report")
             st.dataframe(report_df, use_container_width=True)
 
+            # confusion matrix
+            cm = confusion_matrix(y_test, y_pred, labels=pipeline.named_steps['model'].classes_)
+            st.subheader("Confusion Matrix")
+            fig, ax = plt.subplots() # Buat figure dan axes baru
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm, 
+                                        display_labels=pipeline.classes_)
+            disp.plot(cmap='Blues', ax=ax)
+            st.pyplot(fig) # Tampilkan plot di Streamlit
 
 
