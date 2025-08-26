@@ -344,15 +344,15 @@ st.dataframe(df_prediction_proba,
                  min_value=0,
                  max_value=1
                ),
-               'medium': st.column_config.ProgressColumn(
-                 'medium',
+               'low': st.column_config.ProgressColumn(
+                 'low',
                  format='%f',
                  width='medium',
                  min_value=0,
                  max_value=1
                ),
-               'low': st.column_config.ProgressColumn(
-                 'low',
+               'medium': st.column_config.ProgressColumn(
+                 'medium',
                  format='%f',
                  width='medium',
                  min_value=0,
