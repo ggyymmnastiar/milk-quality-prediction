@@ -221,7 +221,7 @@ with st.expander("Data Preprocessing"):
     tab1, tab2, tab3 = st.tabs(["Pipeline Setup", "Train | Test", "Hyperparameter Tuning"])
     
     with tab1:
-        st.subheader("Preprocessing Pipeline")
+        st.subheader("Preprocessing Pipeline111")
         st.write("**Feature Groups**")
         st.write(f"- Numeric: {numeric}")
         st.write(f"- Binary: {binary}")
