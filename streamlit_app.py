@@ -248,10 +248,12 @@ with st.expander("Data Preprocessing"):
 
         st.subheader("Train Data")
         if st.button("Train the Data (.fit)"):
-            
-            pipeline.fit(X_train, y_train)
-            
-            y_pred = pipeline.predict(X_test)
+            with st.spinner('Model is being trained, please wait...'):
+                pipeline.fit(X_train, y_train)
+                
+                y_pred = pipeline.predict(X_test)
+                
+            st.success('Model training completed!')
             
             report_dict = classification_report(y_test, y_pred, output_dict=True, digits=4)
 
