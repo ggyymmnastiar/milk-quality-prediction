@@ -6,6 +6,18 @@ A Machine Learning web application that predicts milk quality grades (**high**, 
 
 ---
 
+## 📑 Table of Contents
+
+1. [Project Overview](#-project-overview)
+2. [Dataset Description](#-dataset-description)
+3. [Model & Machine Learning Pipeline](#-model--machine-learning-pipeline)
+4. [Dashboard Capabilities](#-dashboard-capabilities)
+5. [Getting Started](#-getting-started)
+6. [Repository Structure](#-repository-structure)
+7. [Tech Stack](#-tech-stack)
+
+---
+
 ## 📌 Project Overview
 
 Milk quality evaluation is a critical aspect of the dairy industry to safeguard consumer health and ensure quality standards. Traditional manual quality checks can be time-consuming and prone to human inconsistency. 
