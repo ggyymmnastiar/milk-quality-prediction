@@ -1,0 +1,43 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code / IDE
+.vscode/
+.idea/
+.history/
+*.swp
+*.swo
+*~
+
+# Operating System (macOS & Windows)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Streamlit secrets (jangan commit kredensial)
+.streamlit/secrets.toml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Distribution & Package builds
+build/
+dist/
+*.egg-info/
+*.egg
+
