@@ -1,134 +1,162 @@
 # 🥛 Milk Quality Prediction
 
-Memprediksi kualitas susu (**high**, **medium**, **low**) berdasarkan sifat fisik dan kimianya menggunakan **Random Forest Classifier**, dikemas dalam dashboard interaktif berbasis Streamlit.
+A Machine Learning web application that predicts milk quality grades (**high**, **medium**, **low**) based on physical and chemical parameters using a **Random Forest Classifier**, deployed via an interactive Streamlit dashboard.
 
 🔗 **Live Dashboard:** [g-milkqualityprediction.streamlit.app](https://g-milkqualityprediction.streamlit.app)
 
 ---
 
-## Tentang Project
+## 📌 Project Overview
 
-Kualitas susu adalah faktor kritis dalam industri dairy. Penilaian manual memakan waktu dan rentan terhadap inkonsistensi. Project ini membangun model klasifikasi yang dapat memprediksi grade susu secara otomatis berdasarkan 7 parameter terukur, lalu menyajikannya dalam dashboard yang memungkinkan pengguna bereksperimen dengan input secara real-time.
+Milk quality evaluation is a critical aspect of the dairy industry to safeguard consumer health and ensure quality standards. Traditional manual quality checks can be time-consuming and prone to human inconsistency. 
 
-### Alur Kerja
+This project delivers an end-to-end classification system that automates milk grade evaluation based on 7 measurable attributes. Through an intuitive web interface, users can explore data distributions, inspect preprocessing and model training metrics, and experiment with parameter inputs to obtain instant quality assessments.
+
+### 🔄 End-to-End Workflow
 
 ```
-Dataset (1059 sampel)
+Raw Dataset (1,059 samples)
     ↓
-Data Cleaning (fix typo kolom, cek missing values)
+Data Cleaning (column typo fixes, missing value inspection)
     ↓
-EDA & Visualisasi (distribusi, korelasi, boxplot)
+Exploratory Data Analysis (distribution charts, correlation heatmap, feature boxplots)
     ↓
-Preprocessing (StandardScaler untuk numerik, passthrough untuk biner)
+Preprocessing Pipeline (StandardScaler for numerical, passthrough for binary)
     ↓
-Random Forest Classifier + GridSearchCV tuning
+Random Forest Classifier + Offline GridSearchCV Tuning
     ↓
-Dashboard Prediksi Interaktif (Streamlit)
+Interactive Streamlit Dashboard (Real-time inference & probability scores)
 ```
 
 ---
 
-## Dataset
+## 📊 Dataset Description
 
-Dataset berisi **1.059 sampel susu** dengan 7 fitur dan 1 variabel target:
+The dataset contains **1,059 milk samples** with 7 input features and 1 target variable:
 
-| Fitur | Tipe | Deskripsi |
-|-------|------|-----------|
-| `pH` | Numerik (float) | Tingkat keasaman/kebasaan susu |
-| `Temperature` | Numerik (int) | Suhu susu (°F) |
-| `Taste` | Biner (0/1) | Kepuasan rasa |
-| `Odor` | Biner (0/1) | Kepuasan aroma |
-| `Fat` | Biner (0/1) | Kandungan lemak |
-| `Turbidity` | Biner (0/1) | Tingkat kekeruhan |
-| `Colour` | Numerik (int) | Nilai intensitas warna (240–255) |
+| Feature | Data Type | Range / Values | Description |
+|---|---|---|---|
+| `pH` | Numerical (float) | 0.0 – 14.0 | Acidity / alkalinity level of milk |
+| `Temperature` | Numerical (int) | 10 – 90 | Milk temperature (°C / °F depending on sensor) |
+| `Taste` | Binary | 0 or 1 | Taste evaluation (0: Not Satisfied, 1: Satisfied) |
+| `Odor` | Binary | 0 or 1 | Odor evaluation (0: Not Satisfied, 1: Satisfied) |
+| `Fat` | Binary | 0 or 1 | Fat content evaluation (0: Not Satisfied, 1: Satisfied) |
+| `Turbidity` | Binary | 0 or 1 | Turbidity / clarity (0: Not Satisfied, 1: Satisfied) |
+| `Colour` | Numerical (int) | 240 – 255 | Color intensity measurement |
 
-**Target:** `Grade` → `high` · `medium` · `low`
+- **Target Variable (`Grade`):** Categorical class with three levels:
+  - `high` — High quality milk
+  - `medium` — Moderate quality milk
+  - `low` — Low quality milk
 
-> **Catatan:** Dataset asli memiliki typo pada nama kolom (`Temprature`, `Fat ` dengan trailing space) yang diperbaiki saat data cleaning.
+> **Data Cleaning Note:** Original column headers in the raw dataset (`Temprature` and `Fat ` with trailing whitespace) are standardized during initial data ingestion.
 
 ---
 
-## Model
+## 🤖 Model & Machine Learning Pipeline
 
-**Algoritma:** Random Forest Classifier — metode ensemble yang membangun banyak decision tree dan menentukan kelas berdasarkan voting mayoritas.
+### Algorithm
+- **Random Forest Classifier:** An ensemble decision tree model capable of capturing complex non-linear feature interactions without prone overfitting.
 
-**Preprocessing Pipeline:**
-- Fitur numerik (`pH`, `Temperature`, `Colour`) → `StandardScaler`
-- Fitur biner (`Taste`, `Odor`, `Fat`, `Turbidity`) → Passthrough (tanpa transformasi)
+### Preprocessing Pipeline
+Built with `sklearn.compose.ColumnTransformer` and `sklearn.pipeline.Pipeline`:
+- **Numerical Features** (`pH`, `Temperature`, `Colour`) → `StandardScaler()`
+- **Binary Features** (`Taste`, `Odor`, `Fat`, `Turbidity`) → `'passthrough'`
 
-**Hyperparameter Tuning** dilakukan secara offline menggunakan `GridSearchCV` dengan `StratifiedKFold` (5 splits) dan scoring `f1_macro`. Parameter terbaik yang ditemukan:
+### Hyperparameter Tuning
+Hyperparameters were evaluated offline with `GridSearchCV` using 5-fold `StratifiedKFold` cross-validation with `f1_macro` scoring metric:
 
 ```python
 {
-    'bootstrap': True,
-    'class_weight': None,
-    'max_features': 'sqrt',
-    'min_samples_leaf': 1,
-    'min_samples_split': 2,
-    'n_estimators': 200
+    'model__bootstrap': True,
+    'model__class_weight': None,
+    'model__max_features': 'sqrt',
+    'model__min_samples_leaf': 1,
+    'model__min_samples_split': 2,
+    'model__n_estimators': 200
 }
 ```
 
-**Split data:** 80% train / 20% test (`random_state=101`)
+- **Train/Test Split:** 80% training set, 20% testing set (`random_state=101`).
 
 ---
 
-## Fitur Dashboard
+## 🖥️ Dashboard Capabilities
 
-| Bagian | Apa yang ditampilkan |
-|--------|---------------------|
-| **Data Overview** | Raw data, input features (X), dan label (y) |
-| **Data Preparation & EDA** | Proses cleaning, missing value check, tipe fitur |
-| **Data Visualization** | Distribusi target, boxplot per fitur, correlation heatmap, statistik deskriptif |
-| **Data Preprocessing** | Detail pipeline, train/test split, tombol training dengan classification report & confusion matrix |
-| **Hyperparameter Tuning** | Parameter grid dan best parameters dari GridSearchCV |
-| **Predicted Grade** | Prediksi real-time berdasarkan input sidebar, lengkap dengan probability bar untuk setiap kelas |
-
-Pengguna dapat mengatur nilai setiap fitur melalui **sidebar** (slider & dropdown), dan prediksi akan langsung berubah.
+| Section | Content & Functionality |
+|---|---|
+| **Data Overview** | Raw data preview, input matrix ($X$), and label vector ($y$). |
+| **Data Preparation & EDA** | Cleaning log, null value counts, and feature datatype breakdown. |
+| **Data Visualization** | Class distribution charts (bar & pie), numerical boxplots, binary countplots, correlation heatmap, and descriptive statistics. |
+| **Data Preprocessing** | Code architecture, train-test split statistics, interactive on-demand model training button with dynamic classification report and confusion matrix. |
+| **Hyperparameter Tuning** | GridSearchCV setup and best parameter configuration reference. |
+| **Interactive Prediction** | Sidebar input sliders and select boxes for real-time grade estimation with class confidence probabilities. |
 
 ---
 
-## Cara Menjalankan
+## 🚀 Getting Started
 
-```bash
-# Clone repository
-git clone https://github.com/ggyymmnastiar/milk-quality-prediction.git
-cd milk-quality-prediction
+### Prerequisites
+- Python 3.9+ (Python 3.11 recommended)
+- `pip` or virtual environment manager
 
-# Install dependencies
-pip install -r requirements.txt
+### Local Setup Instructions
 
-# Jalankan aplikasi
-streamlit run streamlit_app.py
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ggyymmnastiar/milk-quality-prediction.git
+   cd milk-quality-prediction
+   ```
 
-Buka browser di **http://localhost:8501**.
+2. **Create and activate a virtual environment:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate       # macOS / Linux
+   # .venv\Scripts\activate        # Windows
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Launch the application:**
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+5. Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
-## Struktur Project
+## 📁 Repository Structure
 
 ```
 milk-quality-prediction/
 ├── data/
-│   └── milk_dataset.csv        # Dataset susu (1059 sampel)
+│   └── milk_dataset.csv        # Milk quality dataset (1,059 samples)
 ├── .devcontainer/
-│   └── devcontainer.json       # Konfigurasi GitHub Codespaces
+│   └── devcontainer.json       # Devcontainer / Codespaces configuration
 ├── .streamlit/
-│   └── config.toml             # Konfigurasi tema Streamlit
-├── streamlit_app.py            # Aplikasi utama
-├── requirements.txt            # Dependencies Python
-└── README.md
+│   └── config.toml             # Streamlit visual theme configuration
+├── streamlit_app.py            # Streamlit dashboard application
+├── requirements.txt            # Project dependencies
+├── .gitignore                  # Git ignore rules
+└── README.md                   # Project documentation
 ```
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-**Python** · **Streamlit** · **scikit-learn** · **pandas** · **NumPy** · **Matplotlib** · **Seaborn**
+- **Application Framework:** Streamlit
+- **Machine Learning:** scikit-learn
+- **Data Manipulation:** pandas, NumPy
+- **Data Visualization:** Matplotlib, Seaborn
+- **Language:** Python 3.11
 
 ---
 
-## License
+## 📄 License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
